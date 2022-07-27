@@ -1,0 +1,224 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| emp                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use emp;
+Database changed
+mysql> create table employee(id int, name varchar(10), post varchar(15), salary int);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from employee;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO employee values(1,"mandy","developer",50000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++------+-------+-----------+--------+
+| id   | name  | post      | salary |
++------+-------+-----------+--------+
+|    1 | mandy | developer |  50000 |
++------+-------+-----------+--------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO employee values(2,"rohit","tester",40000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO employee values(2,"keval","sr. developer",80000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO employee values(2,"pravin","sr. developer",100000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    1 | mandy   | developer     |  50000 |
+|    2 | rohit   | tester        |  40000 |
+|    2 | keval   | sr. developer |  80000 |
+|    2 | pravin | sr. developer | 100000 |
++------+---------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee values(3,"keval","sr. developer",80000);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO employee values(4,"pravin","sr. developer",100000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    1 | mandy   | developer     |  50000 |
+|    2 | rohit   | tester        |  40000 |
+|    2 | keval   | sr. developer |  80000 |
+|    2 | pravin | sr. developer | 100000 |
+|    3 | keval   | sr. developer |  80000 |
+|    4 | atharva | sr. developer | 100000 |
++------+---------+---------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> DELETE FROM employee WHERE id=2;
+Query OK, 3 rows affected (0.00 sec)
+
+mysql> select * from employee;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    1 | mandy   | developer     |  50000 |
+|    3 | keval   | sr. developer |  80000 |
+|    4 | pravin | sr. developer | 100000 |
++------+---------+---------------+--------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO employee values(2,"rohit","tester",40000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    1 | mandy   | developer     |  50000 |
+|    3 | keval   | sr. developer |  80000 |
+|    4 | pravin | sr. developer | 100000 |
+|    2 | rohit   | tester        |  40000 |
++------+---------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee ORDER BY id ASC;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    1 | mandy   | developer     |  50000 |
+|    2 | rohit   | tester        |  40000 |
+|    3 | keval   | sr. developer |  80000 |
+|    4 | pravin | sr. developer | 100000 |
++------+---------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee ORDER BY id DSC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DSC' at line 1
+mysql> SELECT * FROM employee ORDER BY id DESC;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    4 | pravin | sr. developer | 100000 |
+|    3 | keval   | sr. developer |  80000 |
+|    2 | rohit   | tester        |  40000 |
+|    1 | mandy   | developer     |  50000 |
++------+---------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER table employee add column experience int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM employee ORDER BY id DESC;
++------+---------+---------------+--------+------------+
+| id   | name    | post          | salary | experience |
++------+---------+---------------+--------+------------+
+|    4 | pravin | sr. developer | 100000 |       NULL |
+|    3 | keval   | sr. developer |  80000 |       NULL |
+|    2 | rohit   | tester        |  40000 |       NULL |
+|    1 | mandy   | developer     |  50000 |       NULL |
++------+---------+---------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM employee ORDER BY id ASC;
++------+---------+---------------+--------+------------+
+| id   | name    | post          | salary | experience |
++------+---------+---------------+--------+------------+
+|    1 | mandy   | developer     |  50000 |       NULL |
+|    2 | rohit   | tester        |  40000 |       NULL |
+|    3 | keval   | sr. developer |  80000 |       NULL |
+|    4 | pravin | sr. developer | 100000 |       NULL |
++------+---------+---------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER table employee remove column experience int;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column experience int' at line 1
+mysql> ALTER table employee remove column experience;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'column experience' at line 1
+mysql> ALTER table employee drop column experience;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++------+---------+---------------+--------+
+| id   | name    | post          | salary |
++------+---------+---------------+--------+
+|    1 | mandy   | developer     |  50000 |
+|    3 | keval   | sr. developer |  80000 |
+|    4 | pravin | sr. developer | 100000 |
+|    2 | rohit   | tester        |  40000 |
++------+---------+---------------+--------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER table employee add column experience int;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER table employee modify column experience varchar(10);
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from employee;
++------+---------+---------------+--------+------------+
+| id   | name    | post          | salary | experience |
++------+---------+---------------+--------+------------+
+|    1 | mandy   | developer     |  50000 | NULL       |
+|    3 | keval   | sr. developer |  80000 | NULL       |
+|    4 | pravin | sr. developer | 100000 | NULL       |
+|    2 | rohit   | tester        |  40000 | NULL       |
++------+---------+---------------+--------+------------+
+4 rows in set (0.00 sec)
+
+
+mysql> ALTER table employee rename column experience TO years_worked;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++------+---------+---------------+--------+--------------+
+| id   | name    | post          | salary | years_worked |
++------+---------+---------------+--------+--------------+
+|    1 | mandy   | developer     |  50000 | NULL         |
+|    3 | keval   | sr. developer |  80000 | NULL         |
+|    4 | pravin | sr. developer | 100000 | NULL         |
+|    2 | rohit   | tester        |  40000 | NULL         |
++------+---------+---------------+--------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select post, name from employee where salary>50000;
++---------------+---------+
+| post          | name    |
++---------------+---------+
+| sr. developer | keval   |
+| sr. developer | pravin |
++---------------+---------+
+2 rows in set (0.01 sec)
+
+
+mysql> delete from employee where salary<50000;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employee;
++------+---------+---------------+--------+--------------+
+| id   | name    | post          | salary | years_worked |
++------+---------+---------------+--------+--------------+
+|    1 | mandy   | developer     |  50000 | NULL         |
+|    3 | keval   | sr. developer |  80000 | NULL         |
+|    4 | pravin | sr. developer | 100000 | NULL         |
++------+---------+---------------+--------+--------------+
+3 rows in set (0.00 sec)
