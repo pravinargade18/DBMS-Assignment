@@ -222,3 +222,210 @@ mysql> select * from employee;
 |    4 | pravin | sr. developer | 100000 | NULL         |
 +------+---------+---------------+--------+--------------+
 3 rows in set (0.00 sec)
+
+
+ASSIGNMENT 2:PART 2
+ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
+Enter password: 
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: YES)
+ubuntu@ubuntu-OptiPlex-5000:~$ mysql -u root -p
+Enter password: 
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.0.29-0ubuntu0.22.04.2 (Ubuntu)
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use employee;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> select * from employee;
+ERROR 1146 (42S02): Table 'employee.employee' doesn't exist
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| emp_info           |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp_info;
++--------+----------+--------+------------+
+| emp_id | emp_name | city   | emp_salary |
++--------+----------+--------+------------+
+|      1 | Pravin   | Nashik |      50000 |
+|      2 | Atharva  | Pune   |      70000 |
++--------+----------+--------+------------+
+2 rows in set (0.02 sec)
+
+mysql> 
+mysql> 
+mysql> 
+mysql> "
+    "> 
+    "> 
+    "> 
+    "> 
+    "> 
+    "> 
+    "> 
+    "> 
+    "> ^C
+mysql> alter table emp_info add column skills;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table emp_info add column skills varchar(25);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> update emp_info set skills="web dev";
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from emp_info;
++--------+----------+--------+------------+---------+
+| emp_id | emp_name | city   | emp_salary | skills  |
++--------+----------+--------+------------+---------+
+|      1 | Pravin   | Nashik |      50000 | web dev |
+|      2 | Atharva  | Pune   |      70000 | web dev |
++--------+----------+--------+------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> update emp_info set skills="app dev" where emp_name="Atharva";
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> 
+mysql> select * from emp_info;
++--------+----------+--------+------------+---------+
+| emp_id | emp_name | city   | emp_salary | skills  |
++--------+----------+--------+------------+---------+
+|      1 | Pravin   | Nashik |      50000 | web dev |
+|      2 | Atharva  | Pune   |      70000 | app dev |
++--------+----------+--------+------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> alter table emp_info modify emp_id int auto_increment primary key;
+ERROR 1068 (42000): Multiple primary key defined
+mysql> insert into emp_info value(3,"Ashish","Pimpri",40000,"ML");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emp_info;
++--------+----------+--------+------------+---------+
+| emp_id | emp_name | city   | emp_salary | skills  |
++--------+----------+--------+------------+---------+
+|      1 | Pravin   | Nashik |      50000 | web dev |
+|      2 | Atharva  | Pune   |      70000 | app dev |
+|      3 | Ashish   | Pimpri |      40000 | ML      |
++--------+----------+--------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into emp_info value(4,"Yash","pune",60000,"web dev");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_info value(4,"om","pune",70000,"data science");
+ERROR 1062 (23000): Duplicate entry '4' for key 'emp_info.PRIMARY'
+mysql> insert into emp_info value(5,"om","pune",70000,"data science");
+ERROR 1062 (23000): Duplicate entry '70000' for key 'emp_info.emp_salary'
+mysql> insert into emp_info value(5,"om","pune",57000,"data science");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into emp_info value(6,"Tejas","Mumbai",90000,"web dev");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp_info;
++--------+----------+--------+------------+--------------+
+| emp_id | emp_name | city   | emp_salary | skills       |
++--------+----------+--------+------------+--------------+
+|      1 | Pravin   | Nashik |      50000 | web dev      |
+|      2 | Atharva  | Pune   |      70000 | app dev      |
+|      3 | Ashish   | Pimpri |      40000 | ML           |
+|      4 | Yash     | pune   |      60000 | web dev      |
+|      5 | om       | pune   |      57000 | data science |
+|      6 | Tejas    | Mumbai |      90000 | web dev      |
++--------+----------+--------+------------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> select emp_id ,emp_name from emp_info;
+ERROR 2013 (HY000): Lost connection to MySQL server during query
+No connection. Trying to reconnect...
+Connection id:    8
+Current database: employee
+
++--------+----------+
+| emp_id | emp_name |
++--------+----------+
+|      1 | Pravin   |
+|      2 | Atharva  |
+|      3 | Ashish   |
+|      4 | Yash     |
+|      5 | om       |
+|      6 | Tejas    |
++--------+----------+
+6 rows in set (0.04 sec)
+
+mysql> select distinct(city) from emp_info;
++--------+
+| city   |
++--------+
+| Nashik |
+| Pune   |
+| Pimpri |
+| Mumbai |
++--------+
+4 rows in set (0.00 sec)
+
+mysql> select count(distinct(skills)) from emp_info;
++-------------------------+
+| count(distinct(skills)) |
++-------------------------+
+|                       4 |
++-------------------------+
+1 row in set (0.01 sec)
+
+mysql> select max(emp_salary) from emp_info;
++-----------------+
+| max(emp_salary) |
++-----------------+
+|           90000 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select emp_id,emp_name from emp_info where emp_salary between 57000 and 70000;
++--------+----------+
+| emp_id | emp_name |
++--------+----------+
+|      5 | om       |
+|      4 | Yash     |
+|      2 | Atharva  |
++--------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp_info where city like "P%";
++--------+----------+--------+------------+--------------+
+| emp_id | emp_name | city   | emp_salary | skills       |
++--------+----------+--------+------------+--------------+
+|      2 | Atharva  | Pune   |      70000 | app dev      |
+|      3 | Ashish   | Pimpri |      40000 | ML           |
+|      4 | Yash     | pune   |      60000 | web dev      |
+|      5 | om       | pune   |      57000 | data science |
++--------+----------+--------+------------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> select emp_name from emp_info where emp_salary in (50000,90000);
++----------+
+| emp_name |
++----------+
+| Pravin   |
+| Tejas    |
++----------+
