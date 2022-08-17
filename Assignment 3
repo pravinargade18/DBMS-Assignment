@@ -427,3 +427,52 @@ mysql> ALTER VIEW data  (emp_id,emp_salary) AS SELECT emp_id,emp_salary, FROM em
 ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM emp_info' at line 1
 mysql> ALTER VIEW data  (emp_id,emp_salary) AS SELECT emp_id,emp_salary, FROM emp_info;
 
+PART 3 SUBQUERIES
+mysql> use employee
+Database changed
+mysql> select * from emp_info;
++--------+----------+--------+------------+--------------+------------------+
+| emp_id | emp_name | city   | emp_salary | skills       | experience_in_yr |
++--------+----------+--------+------------+--------------+------------------+
+|      1 | Pravin   | Nashik |      50000 | web dev      |                2 |
+|      2 | Atharva  | Pune   |      70000 | app dev      |                4 |
+|      3 | Ashish   | Pimpri |      40000 | ML           |                3 |
+|      4 | Yash     | pune   |      60000 | web dev      |                6 |
+|      5 | om       | pune   |      57000 | data science |                1 |
+|      6 | Tejas    | Mumbai |      90000 | web dev      |                8 |
++--------+----------+--------+------------+--------------+------------------+
+6 rows in set (0.03 sec)
+
+mysql> select * from emp_info where skills =(select skills from emp_info where emp_name="Pravin");
++--------+----------+--------+------------+---------+------------------+
+| emp_id | emp_name | city   | emp_salary | skills  | experience_in_yr |
++--------+----------+--------+------------+---------+------------------+
+|      1 | Pravin   | Nashik |      50000 | web dev |                2 |
+|      4 | Yash     | pune   |      60000 | web dev |                6 |
+|      6 | Tejas    | Mumbai |      90000 | web dev |                8 |
++--------+----------+--------+------------+---------+------------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp_info where emp_salary>(select emp_salary  from emp_info
+ where emp_name="Ashish");
++--------+----------+--------+------------+--------------+------------------+
+| emp_id | emp_name | city   | emp_salary | skills       | experience_in_yr |
++--------+----------+--------+------------+--------------+------------------+
+|      1 | Pravin   | Nashik |      50000 | web dev      |                2 |
+|      5 | om       | pune   |      57000 | data science |                1 |
+|      4 | Yash     | pune   |      60000 | web dev      |                6 |
+|      2 | Atharva  | Pune   |      70000 | app dev      |                4 |
+|      6 | Tejas    | Mumbai |      90000 | web dev      |                8 |
++--------+----------+--------+------------+--------------+------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp_info where emp_id in (select emp_id from emp_info where emp_salary >50000);
++--------+----------+--------+------------+--------------+------------------+
+| emp_id | emp_name | city   | emp_salary | skills       | experience_in_yr |
++--------+----------+--------+------------+--------------+------------------+
+|      5 | om       | pune   |      57000 | data science |                1 |
+|      4 | Yash     | pune   |      60000 | web dev      |                6 |
+|      2 | Atharva  | Pune   |      70000 | app dev      |                4 |
+|      6 | Tejas    | Mumbai |      90000 | web dev      |                8 |
++--------+----------+--------+------------+--------------+------------------+
+4 rows in set (0.00 sec)
