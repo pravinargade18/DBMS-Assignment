@@ -476,3 +476,92 @@ mysql> select * from emp_info where emp_id in (select emp_id from emp_info where
 |      6 | Tejas    | Mumbai |      90000 | web dev      |                8 |
 +--------+----------+--------+------------+--------------+------------------+
 4 rows in set (0.00 sec)
+
+
+
+
+Part 4
+
+mysql> use employee;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_employee |
++--------------------+
+| customer           |
+| customer1          |
+| emp                |
+| employee           |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from employee;
++--------+----------+---------------+---------+
+| emp_id | emp_name | working_hours | city    |
++--------+----------+---------------+---------+
+|    101 | Yash     |             5 | Pune    |
+|    102 | Kunal    |             3 | Chennai |
+|    103 | Yash     |             3 | Pune    |
+|    104 | Kunal    |             4 | Chennai |
+|    105 | Sid      |             4 | Mumbai  |
+|    106 | OM       |             2 | Mumbai  |
+|    107 | Sid      |             1 | Mumbai  |
++--------+----------+---------------+---------+
+7 rows in set (0.00 sec)
+
+mysql> select city,count(emp_name) from employee group by city having count(emp_name)>2;
++--------+-----------------+
+| city   | count(emp_name) |
++--------+-----------------+
+| Mumbai |               3 |
++--------+-----------------+
+1 row in set (0.00 sec)
+
+mysql> select emp_name,sum(working_hours) from employee group by emp_name;
++----------+--------------------+
+| emp_name | sum(working_hours) |
++----------+--------------------+
+| Yash     |                  8 |
+| Kunal    |                  7 |
+| Sid      |                  5 |
+| OM       |                  2 |
++----------+--------------------+
+4 rows in set (0.00 sec)
+
+mysql> select emp_id,sum(working_hours) from employee group by emp_id;
++--------+--------------------+
+| emp_id | sum(working_hours) |
++--------+--------------------+
+|    101 |                  5 |
+|    102 |                  3 |
+|    103 |                  3 |
+|    104 |                  4 |
+|    105 |                  4 |
+|    106 |                  2 |
+|    107 |                  1 |
++--------+--------------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from employee where city=(select city from employee where emp_id="101";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> select * from employee where city=(select city from employee where emp_id="101");
++--------+----------+---------------+------+
+| emp_id | emp_name | working_hours | city |
++--------+----------+---------------+------+
+|    101 | Yash     |             5 | Pune |
+|    103 | Yash     |             3 | Pune |
++--------+----------+---------------+------+
+2 rows in set (0.00 sec)
+
+mysql> select * from employee where city=(select city from employee where emp_id="105");
++--------+----------+---------------+--------+
+| emp_id | emp_name | working_hours | city   |
++--------+----------+---------------+--------+
+|    105 | Sid      |             4 | Mumbai |
+|    106 | OM       |             2 | Mumbai |
+|    107 | Sid      |             1 | Mumbai |
++--------+----------+---------------+--------+
+3 rows in set (0.00 sec)
